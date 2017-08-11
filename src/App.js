@@ -14,17 +14,38 @@ const PARAM_PAGE    = 'page=';
 const PARAM_HPP     = 'hitsPerPage=';
 const URL           = `${PATH_BASE}${PATH_SEARCH}?${PARAM_SEARCH}`;
 
-const Search = ({ value, onChange, children, onSubmit }) =>
-    <form onSubmit={onSubmit}>
-      <input
-        type="text"
-        value={value}
-        onChange={onChange}
-      />
-      <button type="submit">
-        {children}
-      </button>
-    </form>
+const Loading = () =>
+  <div>Loading...</div>
+
+class Search extends Component {
+
+  componentDidMount() {
+    this.input.focus();
+  }
+
+  render() {
+    const {
+      value,
+      onChange,
+      children,
+      onSubmit,
+    } = this.props;
+
+    return(
+      <form onSubmit={onSubmit}>
+        <input
+          type="text"
+          value={value}
+          onChange={onChange}
+          ref={(node) => { this.input = node; }}
+        />
+        <button type="submit">
+          {children}
+        </button>
+      </form>
+    );
+  }
+}
 
 Search.propTypes = {
   value:    PropTypes.string,
@@ -94,6 +115,7 @@ class App extends Component {
       results: null,
       searchKey: '',
       searchTerm: DEFAULT_QUERY,
+      isLoading: false,
     };
 
     this.needsToSearchTopstories = this.needsToSearchTopstories.bind(this);
@@ -125,11 +147,14 @@ class App extends Component {
       results: {
         ...results,
         [searchKey]: { hits: updatedHits, page }
-      }
+      },
+      isLoading: false,
     });
   }
 
   fetchSearchTopstories(searchTerm, page) {
+    this.setState( {isLoading: true} );
+
     fetch(`${URL}${searchTerm}&${PARAM_PAGE}${page}&${PARAM_HPP}${DEFAULT_HPP}`)
       .then(response => response.json())
       .then(result => this.setSearchTopstories(result))
@@ -173,7 +198,12 @@ class App extends Component {
   }
 
   render() {
-    const { searchTerm, results, searchKey } = this.state;
+    const {
+      searchTerm, 
+      results, 
+      searchKey,
+      isLoading, 
+    } = this.state;
 
     const page = (results &&
       results[searchKey] &&
@@ -189,6 +219,12 @@ class App extends Component {
     return (
       <div className="page">
         <div className="interactions">
+          { isLoading
+            ? <Loading />
+            : <Button onClick={() => this.fetchSearchTopstories(searchKey, page + 1)}>
+              More
+            </Button>
+          }
           <Search
             value={searchTerm}
             onChange={this.onSearchChange}
