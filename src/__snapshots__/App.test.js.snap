@@ -25,16 +25,8 @@ exports[`App snapshots 1`] = `
   <div
     className="table"
   />
-  <div
-    className="interactions"
-  >
-    <button
-      className=""
-      onClick={[Function]}
-      type="button"
-    >
-      More
-    </button>
+  <div>
+    Loading...
   </div>
 </div>
 `;
@@ -42,7 +34,7 @@ exports[`App snapshots 1`] = `
 exports[`Button snapshots 1`] = `
 <button
   className=""
-  onClick={undefined}
+  onClick={[Function]}
   type="button"
 >
   Button
@@ -51,10 +43,10 @@ exports[`Button snapshots 1`] = `
 
 exports[`Search snapshots 1`] = `
 <form
-  onSubmit={undefined}
+  onSubmit={[Function]}
 >
   <input
-    onChange={undefined}
+    onChange={[Function]}
     type="text"
     value={undefined}
   />

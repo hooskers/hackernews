@@ -23,14 +23,19 @@ describe('App', () => {
 
 describe('Search', () => {
 
+    const props = {
+        onChange: () => {},
+        onSubmit: () => {},
+    }
+
   it('renders', () => {
     const div = document.createElement('div');
-    ReactDOM.render(<Search>Search</Search>, div);
+    ReactDOM.render(<Search {...props}>Search</Search>, div);
   });
 
   test('snapshots', () => {
     const component = renderer.create(
-      <Search>Search</Search>
+      <Search {...props}>Search</Search>
     );
     let tree = component.toJSON();
     expect(tree).toMatchSnapshot();
@@ -40,14 +45,18 @@ describe('Search', () => {
 
 describe('Button', () => {
 
+    const props = {
+        onClick: () => {},
+    }
+
   it('renders', () => {
     const div = document.createElement('div');
-    ReactDOM.render(<Button>Button</Button>, div);
+    ReactDOM.render(<Button {...props}>Button</Button>, div);
   });
 
   test('snapshots', () => {
     const component = renderer.create(
-      <Button>Button</Button>
+      <Button {...props}>Button</Button>
     );
     let tree = component.toJSON();
     expect(tree).toMatchSnapshot();
@@ -62,6 +71,7 @@ describe('Table', () => {
       {objectID: 'a', author: 'Shelob', url: 'www.google.com', num_comments: 4},
       {objectID: 'b', author: 'Wade', url: 'www.yahoo.com', num_comments: 5},
     ],
+    onDismiss: () => {},
   };
 
   it('renders', () => {
