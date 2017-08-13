@@ -72,6 +72,8 @@ describe('Table', () => {
       {objectID: 'b', author: 'Wade', url: 'www.yahoo.com', num_comments: 5},
     ],
     onDismiss: () => {},
+    sortKey: 'TITLE',
+    isSortReverse: false,
   };
 
   it('renders', () => {
